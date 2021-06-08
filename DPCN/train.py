@@ -76,7 +76,7 @@ def train():
     schedular = lr_scheduler.StepLR(optimizer, step_size=20, gamma=0.5)
     logging.info('Done...\n')
     epoch_losses = []
-    mean_acc = []
+    epoch_acc = []
     logging.info('Start training...')
     epoch_losses = []
     epoch_ma_f1 = []
@@ -129,7 +129,7 @@ def train():
             print('correct_cnt: {}, total_cnt: {}'.format(correct_cnt, total_cnt))
             acc = correct_cnt / total_cnt
             logging.info('Accuracy: {:.4f}'.format(acc))
-            mean_acc.append(acc)
+            epoch_acc.append(acc)
             summary_writer.add_scalar('acc', acc, epoch)
             precision = precision_score(test_label, test_pred, average='macro')
             recall = recall_score(test_label, test_pred, average='macro')
@@ -151,7 +151,7 @@ def train():
     summary_writer.close()
 
     np.savetxt(r'F:\DPCN\loss.txt',epoch_losses,fmt='%.4f')
-    np.savetxt(r'F:\DPCN\acc.txt', mean_acc,fmt='%.4f')
+    np.savetxt(r'F:\DPCN\acc.txt', epoch_acc,fmt='%.4f')
     np.savetxt(r'F:\DPCN\precision.txt', epoch_precision,fmt='%.4f')
     np.savetxt(r'F:\DPCN\recall.txt', epoch_recall,fmt='%.4f')
     np.savetxt(r'F:\DPCN\ma_f1.txt', epoch_ma_f1,fmt='%.4f')

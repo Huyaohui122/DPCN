@@ -27,7 +27,7 @@ hparams = {
 
 class ShapeNetDataset(data.Dataset):
     def __init__(self, train=True):
-        bu_shape = gpd.read_file('../new/' + bu_filename + '.shp', encode='utf-8')
+        bu_shape = gpd.read_file('../data/' + bu_filename + '.shp', encode='utf-8')
         bu_use = copy.deepcopy(bu_shape)
         bu_mbr, bu_use = get_shape_mbr(bu_use)
         bu_use = get_shape_normalize_final(bu_use, hparams['if_scale_y'])
@@ -55,7 +55,7 @@ class ShapeNetDataset(data.Dataset):
         train_xy_reshape = train_x_y.reshape(index, hparams['seq_length'], 2)
         test_xy_reshape = test_x_y.reshape(5010 - index, hparams['seq_length'], 2)
 
-        label = np.genfromtxt("../new/label.content", dtype=np.int64)
+        label = np.genfromtxt("../data/label.content", dtype=np.int64)
         label_train = label[:index]
         label_train = label_train.reshape(-1, 1)
         label_test = label[index:]
